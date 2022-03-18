@@ -5,10 +5,10 @@ branding:
   color: white
 inputs:
   environment-name:
-    description: Name of Cloudify environment to create
+    description: Name of Cloudify environment to handle terraform plan
     required: true
   environment-id:
-    description: Id of Cloudify environment to create
+    description: Id of Cloudify environment to handle terraform plan
     default: "-"
     required: false
   labels:
