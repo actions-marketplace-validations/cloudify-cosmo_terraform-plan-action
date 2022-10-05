@@ -57,7 +57,7 @@ runs:
     - name: Check if Environment exists
       if: ${{ inputs.environment-id == '-' }}
       id: check_environment
-      uses: cloudify-cosmo/environment-data-using-labels-action@v1.2
+      uses: cloudify-cosmo/environment-data-using-labels-action@v1.3
       with:
           environment-name: ${{ inputs.environment-name }}
           labels: ${{ inputs.labels }}
@@ -123,7 +123,7 @@ runs:
     - name: Execute Terraform plan
       if: ${{ steps.check_if_deployment_exists.outputs.exists != 'true' }}
       id: terraform_plan
-      uses: cloudify-cosmo/terraform-action@v1.2
+      uses: cloudify-cosmo/terraform-action@v1.3
       with:
           environment-name: ${{ inputs.environment-name }}
           module-file: ${{ inputs.module-file }}
@@ -136,7 +136,7 @@ runs:
     - name: Execute Terraform plan workflow
       if: ${{ steps.check_if_deployment_exists.outputs.exists == 'true' }}
       id: terraform_plan_wf
-      uses: cloudify-cosmo/execute-workflow-action@v1.2
+      uses: cloudify-cosmo/execute-workflow-action@v1.3
       with:
         environment-name: ${{ steps.check_if_deployment_exists.outputs.deployment_id }}
         workflow: "terraform_plan"
@@ -158,7 +158,7 @@ runs:
 
     - name: get deployment nodes
       id: get_nodes
-      uses: cloudify-cosmo/cli-action@v1.2
+      uses: cloudify-cosmo/cli-action@v1.3
       with:
         command: nodes list -d ${{ steps.check_if_deployment_exists.outputs.deployment_id || fromJson(steps.get_deployment_id.outputs.packageJson).deployment_id}} --json
 
@@ -176,7 +176,7 @@ runs:
 
     - name: get terraform module node instance id
       id: get_instance_instance
-      uses: cloudify-cosmo/cli-action@v1.2
+      uses: cloudify-cosmo/cli-action@v1.3
       with:
         command: node-instances list -d ${{ steps.check_if_deployment_exists.outputs.deployment_id || fromJson(steps.get_deployment_id.outputs.packageJson).deployment_id}} -n ${{steps.get_node_id.outputs.node_id}} --json
 
@@ -191,7 +191,7 @@ runs:
 
     - name: get terraform module instane runtime properties
       id: get_node_instance_runtime
-      uses: cloudify-cosmo/cli-action@v1.2
+      uses: cloudify-cosmo/cli-action@v1.3
       with:
         command: node-instances get ${{ steps.get_node_instance_id.outputs.instance-id }} --json
 
